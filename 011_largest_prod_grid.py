@@ -39,7 +39,6 @@ nums = """\
 dirty_rows = nums.strip().splitlines()
 rows = [row.split(" ") for row in dirty_rows]
 rows = [[int(i) for i in row ] for row in rows]
-num_row = len(rows)
 len_row = len(rows[0])
 mxm = 0
 count = 0
@@ -62,7 +61,7 @@ def get_diag_u():
         adj += 1
     return ls
 
-for row in range(num_row):
+for row in range(len(rows)):
     for col in range(len_row):
         l_r = np.prod(rows[row][col:col+4])
         u_d = np.prod([row[col] for row in rows[row:row+4]])
@@ -74,12 +73,10 @@ for row in range(num_row):
             diag_u = np.prod(get_diag_u())
         except IndexError:
             pass
-        print(f" values: {l_r} || {u_d} || {diag_d} || {diag_u}")
 
         max_round = max([l_r, u_d, diag_d, diag_u])
         if max_round > mxm:
             mxm = max_round 
-        print(mxm)
         
 print(mxm)
 
@@ -99,3 +96,8 @@ print(mxm)
 # simpler way of "all on one pass, create a test for each line and if pass compute / compare (/ store)"
 # second one is way less code, and may be simpler. I do wonder if the "only input correct values" thinking I took from Thor has been washed with this new approach.
 
+
+## Ideas for optimization:
+    ## combine the two diag functions
+    ## make the try except statements less ugly
+    ## combine the rows lines into one, I'm sure this can be done.
